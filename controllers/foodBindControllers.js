@@ -5,6 +5,7 @@ const {
 
 // Display all FoodBind
 exports.getAllFoodBind = (req, res, next) => {
+  console.log("A1");
   FoodBind.find()
     .then((contracts) => res.status(200).json(contracts))
     .catch((error) => res.status(400).json({ error }));
@@ -12,15 +13,22 @@ exports.getAllFoodBind = (req, res, next) => {
 
 exports.getSpecificFoodBind = (req, res, next) => {
   const specificId = req.params.id;
-
   FoodBind.find({ idMeals: specificId })
     .then((alimentLiee) => {
-      let test = alimentLiee;
-      const promises = test.map((element) => {
-        return getSpecificFoodNutritionalValueForMeals(element.idFood).then((food) => {
-          element.foodDetails = food;
-          return element;
-        });
+      const promises = alimentLiee.map((element) => {
+        return getSpecificFoodNutritionalValueForMeals(element.idFood).then(
+          (foods) => {
+            let foodBindValue = foods.find(
+              (e) => e._id.toString() === element.idFood[0]
+            );
+            let NewFoodBind = {
+              foodBindValue,
+              idFoodBind: element._id.toString(),
+              quantity: element.quantity,
+            };
+            return NewFoodBind;
+          }
+        );
       });
 
       Promise.all(promises)
@@ -43,9 +51,24 @@ exports.createOneFoodBind = (req, res, next) => {
   });
   thing
     .save()
-    .then(() => {
+    .then((createdThing) => {
       res.status(201).json({
         message: "FoodBind correctement enregistrés !",
+        id: createdThing._id,
+      });
+    })
+    .catch((error) => {
+      console.error(error);
+      res.status(400).json({ error });
+    });
+};
+
+// Actualiser one FoodBind
+exports.updateFoodBind = (req, res, next) => {
+  FoodBind.updateOne({ _id: req.params.id }, { $set: { ...req.body } })
+    .then(() => {
+      res.status(201).json({
+        message: "FoodBind correctement modifié !",
       });
     })
     .catch((error) => {

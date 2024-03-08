@@ -11,13 +11,3 @@ const foodNutritionalValue = mongoose.Schema({
 });
 
 module.exports = mongoose.model("FoodNutritionalValue", foodNutritionalValue);
-
-// {
-//   "name": "Amandes",
-//   "unitMeasurement": false,
-//   "calories": 525,
-//   "protein": 95,
-//   "lipid": 5,
-//   "carbohydrates": 68,
-//   "price": 2.5
-// }

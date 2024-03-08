@@ -9,5 +9,6 @@ router.get("/:id", FoudBindsControllers.getSpecificFoodBind);
 
 router.post("/", FoudBindsControllers.createOneFoodBind);
 
+router.put("/:id", FoudBindsControllers.updateFoodBind);
 
 module.exports = router;

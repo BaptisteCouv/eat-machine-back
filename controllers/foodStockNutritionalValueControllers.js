@@ -29,15 +29,12 @@ exports.getSpecificFoodNutritionalValueT = (req, res, next) => {
 };
 
 exports.getSpecificFoodNutritionalValueForMeals = (specificId) => {
-  let a = FoodNutritionalValue.find({ _id: { $in: [specificId] } });
-  return a
+  let allFoods = FoodNutritionalValue.find({ _id: { $in: [specificId] } });
+  return allFoods;
 };
 
-
 exports.getSpecificFoodNutritionalValue = (req, res, next) => {
-  // const { ids } = req.body;
   const ids = req.query.ids;
-  console.log(ids);
 
   if (!ids) {
     return res.status(400).json({ message: "Aucun ID spécifié." });
@@ -57,7 +54,6 @@ exports.getSpecificFoodNutritionalValue = (req, res, next) => {
     .catch((error) => res.status(400).json({ error }));
 };
 
-
 // Create one FoodNutritionalValue
 exports.createOneFoodNutritionalValue = (req, res, next) => {
   delete req.body._id;
@@ -75,4 +71,11 @@ exports.createOneFoodNutritionalValue = (req, res, next) => {
       console.error(error);
       res.status(400).json({ error });
     });
+};
+
+// delete one FoodNutritionalValue
+exports.deleteOneFoodNutritionalValue = (req, res, next) => {
+  FoodNutritionalValue.deleteOne({ _id: req.params.id })
+    .then(() => res.status(200).json({ message: "Objet supprimé !" }))
+    .catch((error) => res.status(400).json({ error }));
 };
