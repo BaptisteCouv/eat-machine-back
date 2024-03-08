@@ -11,4 +11,8 @@ router.post("/", FoudBindsControllers.createOneFoodBind);
 
 router.put("/:id", FoudBindsControllers.updateFoodBind);
 
+router.delete("/:id", FoudBindsControllers.deleteFoodBind);
+
+
+
 module.exports = router;
