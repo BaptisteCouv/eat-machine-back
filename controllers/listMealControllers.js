@@ -1,13 +1,13 @@
 const Meals = require("../models/mealModel");
 
-// Display all contracts
+// Display all meal
 exports.getAllMeals = (req, res, next) => {
   Meals.find()
     .then((contracts) => res.status(200).json(contracts))
     .catch((error) => res.status(400).json({ error }));
 };
 
-// Create one contract
+// Create one meal
 exports.createMeal = (req, res, next) => {
   delete req.body._id;
   const thing = new Meals({
@@ -23,4 +23,27 @@ exports.createMeal = (req, res, next) => {
       console.error(error);
       res.status(400).json({ error });
     });
+};
+
+// Display One ---- NAME ---- Meal 
+exports.getOneMealName = (req, res, next) => {
+  const ids = req.params.id;
+
+  if (!ids) {
+    return res.status(400).json({ message: "Aucun ID spécifié." });
+  }
+
+  const idArray = Array.isArray(ids) ? ids : [ids];
+
+  Meals.findOne({ _id: { $in: idArray } })
+    .then((contracts) => {
+      console.log(contracts.name);
+      if (contracts.length === 0) {
+        return res
+          .status(404)
+          .json({ message: "Meal name found." });
+      }
+      res.status(200).json(contracts.name);
+    })
+    .catch((error) => res.status(400).json({ error }));
 };

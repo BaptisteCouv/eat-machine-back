@@ -7,26 +7,26 @@ exports.getAllFoodNutritionalValue = (req, res, next) => {
     .catch((error) => res.status(400).json({ error }));
 };
 
-exports.getSpecificFoodNutritionalValueT = (req, res, next) => {
-  const { ids } = req.body;
+// exports.getSpecificFoodNutritionalValueT = (req, res, next) => {
+//   const { ids } = req.body;
 
-  if (!ids) {
-    return res.status(400).json({ message: "Aucun ID spécifié." });
-  }
+//   if (!ids) {
+//     return res.status(400).json({ message: "Aucun ID spécifié." });
+//   }
 
-  const idArray = Array.isArray(ids) ? ids : [ids];
+//   const idArray = Array.isArray(ids) ? ids : [ids];
 
-  FoodNutritionalValue.find({ _id: { $in: idArray } })
-    .then((contracts) => {
-      if (contracts.length === 0) {
-        return res
-          .status(404)
-          .json({ message: "Aliment trouvé avec cet ID spécifique." });
-      }
-      res.status(200).json(contracts);
-    })
-    .catch((error) => res.status(400).json({ error }));
-};
+//   FoodNutritionalValue.find({ _id: { $in: idArray } })
+//     .then((contracts) => {
+//       if (contracts.length === 0) {
+//         return res
+//           .status(404)
+//           .json({ message: "Aliment trouvé avec cet ID spécifique." });
+//       }
+//       res.status(200).json(contracts);
+//     })
+//     .catch((error) => res.status(400).json({ error }));
+// };
 
 exports.getSpecificFoodNutritionalValueForMeals = (specificId) => {
   let allFoods = FoodNutritionalValue.find({ _id: { $in: [specificId] } });
