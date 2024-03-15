@@ -37,7 +37,6 @@ exports.getOneMealName = (req, res, next) => {
 
   Meals.findOne({ _id: { $in: idArray } })
     .then((contracts) => {
-      console.log(contracts.name);
       if (contracts.length === 0) {
         return res
           .status(404)
