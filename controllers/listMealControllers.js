@@ -4,6 +4,7 @@ const Meals = require("../models/mealModel");
 exports.getAllMeals = async (req, res, next) => {
   Meals.find()
     .then(async (contracts) => {
+      console.log(contracts);
       var dateActuelle = new Date();
 
       var anneeActuelle = dateActuelle.getFullYear();
@@ -101,4 +102,18 @@ exports.getAllMealActivate = (req, res, next) => {
 // Change if is activate meal or not
 exports.changeActiveMeal = async (id, isActive) => {
   await Meals.updateOne({ _id: id }, { $set: { isActive: isActive } });
+};
+
+// Actualiser one FoodBind
+exports.updateMealBind = (req, res, next) => {
+  Meals.updateOne({ _id: req.params.id }, { $set: { ...req.body.mealBody } })
+    .then(() => {
+      res.status(201).json({
+        message: "Meals correctement modifié !",
+      });
+    })
+    .catch((error) => {
+      console.error(error);
+      res.status(400).json({ error });
+    });
 };

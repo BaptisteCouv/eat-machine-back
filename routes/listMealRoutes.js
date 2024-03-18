@@ -13,5 +13,11 @@ router.post("/", MealsControllers.createMeal);
 router.get("/:id", MealsControllers.getOneMealName);
 
 
+// Route for display all contracts
+router.put("/:id", MealsControllers.updateMealBind);
+
+
+
+
 
 module.exports = router;
