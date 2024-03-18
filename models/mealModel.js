@@ -5,6 +5,7 @@ const meals = mongoose.Schema({
   recurrence: { type: Boolean, require: true },
   dateSelect: { type: Date, require: false },
   idCategory: [],
+  isActive: { type: Boolean, require: true },
 });
 
 module.exports = mongoose.model("Meals", meals);

@@ -5,7 +5,6 @@ const {
 
 // Display all FoodBind
 exports.getAllFoodBind = (req, res, next) => {
-  console.log("A1");
   FoodBind.find()
     .then((contracts) => res.status(200).json(contracts))
     .catch((error) => res.status(400).json({ error }));
