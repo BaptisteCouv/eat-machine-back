@@ -12,12 +12,10 @@ router.post("/", MealsControllers.createMeal);
 // Route for display all contracts
 router.get("/:id", MealsControllers.getOneMealName);
 
-
 // Route for display all contracts
 router.put("/:id", MealsControllers.updateMealBind);
 
-
-
-
+// Route for delete meal
+router.delete("/:id", MealsControllers.deleteOneMeal);
 
 module.exports = router;

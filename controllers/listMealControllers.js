@@ -117,3 +117,10 @@ exports.updateMealBind = (req, res, next) => {
       res.status(400).json({ error });
     });
 };
+
+// delete one Meal
+exports.deleteOneMeal = (req, res, next) => {
+  Meals.deleteOne({ _id: req.params.id })
+    .then(() => res.status(200).json({ message: "Objet supprimé !" }))
+    .catch((error) => res.status(400).json({ error }));
+};
