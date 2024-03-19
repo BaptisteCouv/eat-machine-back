@@ -2,6 +2,7 @@ const Meals = require("../models/mealModel");
 
 // Display all meal
 exports.getAllMeals = async (req, res, next) => {
+  console.log("test");
   Meals.find()
     .then(async (contracts) => {
       console.log(contracts);
