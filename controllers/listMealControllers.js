@@ -2,10 +2,8 @@ const Meals = require("../models/mealModel");
 
 // Display all meal
 exports.getAllMeals = async (req, res, next) => {
-  console.log("test");
   Meals.find()
     .then(async (contracts) => {
-      console.log(contracts);
       var dateActuelle = new Date();
 
       var anneeActuelle = dateActuelle.getFullYear();
@@ -13,27 +11,29 @@ exports.getAllMeals = async (req, res, next) => {
       var jourActuel = dateActuelle.getDate();
 
       await contracts.forEach(async (element) => {
-        if (!element.recurrence) {
-          var anneeAComparer = element.dateSelect.getFullYear();
-          var moisAComparer = element.dateSelect.getMonth();
-          var jourAComparer = element.dateSelect.getDate();
+        if (element.dateSelect === null && element.recurrence) {
+          if (!element.recurrence) {
+            var anneeAComparer = element.dateSelect.getFullYear();
+            var moisAComparer = element.dateSelect.getMonth();
+            var jourAComparer = element.dateSelect.getDate();
 
-          if (
-            anneeAComparer === anneeActuelle &&
-            moisAComparer === moisActuel &&
-            jourAComparer === jourActuel
-          ) {
-            element.isActive = true;
-            await this.changeActiveMeal(element._id, true);
-          } else if (element.dateSelect > dateActuelle) {
-            element.isActive = false;
-            await this.changeActiveMeal(element._id, false);
+            if (
+              anneeAComparer === anneeActuelle &&
+              moisAComparer === moisActuel &&
+              jourAComparer === jourActuel
+            ) {
+              element.isActive = true;
+              await this.changeActiveMeal(element._id, true);
+            } else if (element.dateSelect > dateActuelle) {
+              element.isActive = false;
+              await this.changeActiveMeal(element._id, false);
+            } else {
+              element.isActive = false;
+              await this.changeActiveMeal(element._id, false);
+            }
           } else {
-            element.isActive = false;
-            await this.changeActiveMeal(element._id, false);
+            element.isActive = true;
           }
-        } else {
-          element.isActive = true;
         }
       });
       return res.status(200).json(contracts);
