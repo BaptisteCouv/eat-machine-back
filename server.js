@@ -26,11 +26,7 @@ app.use((req, res, next) => {
 
 mongoose
   .connect(
-    "mongodb+srv://couavouxgroupe:J93IQ8T81GUlnJBC@cluster-eat-machine.aofeed2.mongodb.net/eat_machine",
-    {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    }
+    "mongodb+srv://couavouxgroupe:J93IQ8T81GUlnJBC@cluster-eat-machine.aofeed2.mongodb.net/eat_machine"
   )
   .then(() => {
     console.log("Connexion à la base de données");
@@ -45,7 +41,7 @@ app.use("/api/categories", categoryRoutes);
 app.use("/api/foodBind", foodBindRoutes);
 
 app.use((req, res) => {
-  res.json({ message: 'Connecté a l\'api' }); 
+  res.json({ message: "Connecté a l'api" });
 });
 
 module.exports = app;
