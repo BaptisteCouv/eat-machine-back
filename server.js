@@ -1,7 +1,10 @@
 const express = require("express");
 const cors = require("cors");
 const app = express();
-const mongoose = require("mongoose");
+// const mongoose = require("mongoose");
+const { MongoClient, ServerApiVersion } = require("mongodb");
+const uri =
+  "mongodb+srv://couavouxgroupe:J93IQ8T81GUlnJBC@cluster-eat-machine.aofeed2.mongodb.net/eat_machine";
 
 const mealsRoutes = require("./routes/listMealRoutes");
 const foodStockNutritionalValueRoutes = require("./routes/foodStockNutritionalValueRoutes");
@@ -24,16 +27,37 @@ app.use((req, res, next) => {
   next();
 });
 
-mongoose
-  .connect(
-    "mongodb+srv://couavouxgroupe:J93IQ8T81GUlnJBC@cluster-eat-machine.aofeed2.mongodb.net/eat_machine"
-  )
-  .then(() => {
-    console.log("Connexion à la base de données");
-  })
-  .catch((error) => {
-    console.error("Erreur de connexion à la base de données:", error);
-  });
+// mongoose
+//   .connect(
+//     "mongodb+srv://couavouxgroupe:J93IQ8T81GUlnJBC@cluster-eat-machine.aofeed2.mongodb.net/eat_machine"
+//   )
+//   .then(() => {
+//     console.log("Connexion à la base de données");
+//   })
+//   .catch((error) => {
+//     console.error("Erreur de connexion à la base de données:", error);
+//   });
+
+const client = new MongoClient(uri, {
+  serverApi: {
+    version: ServerApiVersion.v1,
+    strict: true,
+    deprecationErrors: true,
+  },
+});
+
+async function run() {
+  try {
+    // Connect the client to the server	(optional starting in v4.7)
+    await client.connect();
+    // Send a ping to confirm a successful connection
+    await client.db("admin").command({ ping: 1 });
+    console.log("Pinged your deployment. You successfully connected to MongoDB!");
+  } finally {
+    // Ensures that the client will close when you finish/error
+    await client.close();
+  }
+}
 
 app.use("/api/meals", mealsRoutes);
 app.use("/api/foodsNutritional", foodStockNutritionalValueRoutes);
@@ -43,5 +67,7 @@ app.use("/api/foodBind", foodBindRoutes);
 app.use((req, res) => {
   res.json({ message: "Connecté a l'api" });
 });
+
+run().catch(console.dir);
 
 module.exports = app;
