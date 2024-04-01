@@ -74,6 +74,6 @@ app.use((req, res) => {
   res.json({ message: "Connecté a l'api" });
 });
 
-app.use(run().catch(console.dir));
+run().catch(console.dir)
 
 module.exports = app;
