@@ -44,7 +44,4 @@ app.use("/api/foodsNutritional", foodStockNutritionalValueRoutes);
 app.use("/api/categories", categoryRoutes);
 app.use("/api/foodBind", foodBindRoutes);
 
-const port = process.env.PORT || 3001;
-app.listen(port, () => {
-  console.log(`Server is running on http://192.168.1.74:${port}`);
-});
+module.exports = app;
