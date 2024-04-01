@@ -11,7 +11,7 @@ exports.getAllMeals = async (req, res, next) => {
       var jourActuel = dateActuelle.getDate();
 
       await contracts.forEach(async (element) => {
-        if (element.dateSelect === null && element.recurrence) {
+        if (element.dateSelect != null || element.recurrence) {
           if (!element.recurrence) {
             var anneeAComparer = element.dateSelect.getFullYear();
             var moisAComparer = element.dateSelect.getMonth();
@@ -34,6 +34,8 @@ exports.getAllMeals = async (req, res, next) => {
           } else {
             element.isActive = true;
           }
+        } else {
+          element.isActive = false;
         }
       });
       return res.status(200).json(contracts);
