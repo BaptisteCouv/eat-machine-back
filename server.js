@@ -38,8 +38,6 @@ app.use((req, res, next) => {
 //     console.error("Erreur de connexion à la base de données:", error);
 //   });
 
-console.log("test de log");
-
 const client = new MongoClient(uri, {
   serverApi: {
     version: ServerApiVersion.v1,
@@ -54,7 +52,13 @@ async function run() {
     await client.connect();
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
-    console.log("Pinged your deployment. You successfully connected to MongoDB!");
+    console.log(
+      "Pinged your deployment. You successfully connected to MongoDB!"
+    );
+
+    app.use((req, res) => {
+      res.json({ message: "connecté a la base de donnée" });
+    });
   } finally {
     // Ensures that the client will close when you finish/error
     await client.close();
