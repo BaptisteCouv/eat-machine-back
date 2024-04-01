@@ -38,6 +38,8 @@ app.use((req, res, next) => {
 //     console.error("Erreur de connexion à la base de données:", error);
 //   });
 
+console.log("test de log");
+
 const client = new MongoClient(uri, {
   serverApi: {
     version: ServerApiVersion.v1,
