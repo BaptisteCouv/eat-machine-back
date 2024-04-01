@@ -25,10 +25,13 @@ app.use((req, res, next) => {
 });
 
 mongoose
-  .connect("mongodb://192.168.1.74:27017/eat_machine", {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
+  .connect(
+    "mongodb+srv://couavouxgroupe:J93IQ8T81GUlnJBC@cluster-eat-machine.aofeed2.mongodb.net/eat_machine",
+    {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    }
+  )
   .then(() => {
     console.log("Connexion à la base de données");
   })
