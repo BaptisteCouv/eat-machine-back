@@ -1,10 +1,9 @@
 const express = require("express");
 const cors = require("cors");
 const app = express();
+require("dotenv").config();
 // const mongoose = require("mongoose");
 const { MongoClient, ServerApiVersion } = require("mongodb");
-const uri =
-  "mongodb+srv://couavouxgroupe:J93IQ8T81GUlnJBC@cluster-eat-machine.aofeed2.mongodb.net/eat_machine";
 
 const mealsRoutes = require("./routes/listMealRoutes");
 const foodStockNutritionalValueRoutes = require("./routes/foodStockNutritionalValueRoutes");
@@ -38,7 +37,7 @@ app.use((req, res, next) => {
 //     console.error("Erreur de connexion à la base de données:", error);
 //   });
 
-const client = new MongoClient(uri, {
+const client = new MongoClient(process.env.MONGO_DB_URL, {
   serverApi: {
     version: ServerApiVersion.v1,
     strict: true,
@@ -74,6 +73,6 @@ app.use((req, res) => {
   res.json({ message: "Connecté a l'api" });
 });
 
-run().catch(console.dir)
+run().catch(console.dir);
 
 module.exports = app;
